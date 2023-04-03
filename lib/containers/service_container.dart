@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:login_service_app/3rdparty/firebase_remote_config.dart';
 import 'package:login_service_app/3rdparty/google_sign_in.dart';
+import 'package:login_service_app/remote_api/auth_api.dart';
 import 'package:login_service_app/services/auth_service.dart';
 
 class ServiceContainer {
@@ -17,13 +19,11 @@ class ServiceContainer {
 
   Future<void> initialize() async {
     //get client id from remote config
-    final remoteConfig = FirebaseRemoteConfig.instance;
-    await remoteConfig.setConfigSettings(RemoteConfigSettings(
-        fetchTimeout: const Duration(seconds: 10),
-        minimumFetchInterval: const Duration(hours: 1)));
-    await remoteConfig.fetchAndActivate();
+    await initializeRemoteConfig();
+    final clientId = getOauthClientId();
 
-    final authService = AuthService(createGoogleSignInInstance());
+    final authService = AuthService(
+        createGoogleSignInInstance(oAuthClientId: clientId), AuthApi());
     _services.add(authService);
   }
 

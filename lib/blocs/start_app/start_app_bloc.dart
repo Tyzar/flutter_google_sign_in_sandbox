@@ -22,7 +22,8 @@ class StartAppBloc extends Bloc<StartAppEvent, StartAppState> {
   Future<void> _doCheckSignIn(
       _Initialize event, Emitter<StartAppState> emit) async {
     try {
-      final isSignedIn = await _authService.isSignedIn();
+      final signedAccount = await _authService.signInSilently();
+      final isSignedIn = signedAccount != null;
       emit(state.copyWith(
           allFinish: true, checkSignInResult: optionOf(right(isSignedIn))));
     } catch (e) {

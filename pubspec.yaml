@@ -39,10 +39,10 @@ dependencies:
   firebase_core: ^2.8.0
   flutter_bloc: ^8.1.2
   shared_preferences: ^2.0.20
-  build_runner: ^2.3.3
   dartz: ^0.10.1
   firebase_remote_config: ^4.0.0
   firebase_analytics: ^10.2.0
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:
